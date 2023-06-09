@@ -1,0 +1,29 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Contributor {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+type Query {
+  contributor(id: Int!): Contributor!
+}
+
+type Mutation {
+  createContributor(createContributorInput: CreateContributorInput!): Contributor!
+  updateContributor(updateContributorInput: UpdateContributorInput!): Contributor!
+  removeContributor(id: Int!): Contributor!
+}
+
+input CreateContributorInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input UpdateContributorInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
