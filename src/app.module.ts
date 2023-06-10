@@ -27,7 +27,7 @@ import { UserType } from './user_type/entities/user_type.entity';
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME,
         entities: [Usuario,UserType ],
-        synchronize: true,
+        synchronize: false,
         options: { encrypt: false}
       })
     }),

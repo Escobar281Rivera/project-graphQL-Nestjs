@@ -2,28 +2,84 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Contributor {
-  """Example field (placeholder)"""
-  exampleField: Int!
+type UserType {
+  id_tipouser: Int!
+  descripcion: String!
+  estado: Boolean!
+}
+
+type Usuario {
+  id_usuario: Int!
+  id_tipouser: Int
+  nombre: String
+  apellido: String
+  usuario: String
+  clave: String
+  fechacreacion: DateTime
+  activo: Boolean!
+  correo: String
+  usuario_movil: String!
+  id_dispositivo: String
+  recibir_notificaciones: String
+  claveApp: String
+  estadoClaveApp: Boolean
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UpdateClaveAppResponse {
+  ok: Boolean!
+  message: String!
+  user: Usuario
+}
+
+type GetOneUser {
+  ok: Boolean!
+  message: String!
+  user: Usuario
+}
+
+type LoginResponse {
+  ok: Boolean!
+  message: String!
+  user: Usuario
+  accessToken: String
 }
 
 type Query {
-  contributor(id: Int!): Contributor!
+  userType(id: Int!): UserType!
+  users: [Usuario!]!
+  user(id: Int!): GetOneUser!
+  auth(body: Login!): LoginResponse!
+}
+
+input Login {
+  username: String!
+  clave: String!
 }
 
 type Mutation {
-  createContributor(createContributorInput: CreateContributorInput!): Contributor!
-  updateContributor(updateContributorInput: UpdateContributorInput!): Contributor!
-  removeContributor(id: Int!): Contributor!
+  createUserType(createUserTypeInput: CreateUserTypeInput!): UserType!
+  updateUserType(updateUserTypeInput: UpdateUserTypeInput!): UserType!
+  removeUserType(id: Int!): UserType!
+  updateClave(data: UpdateClaveApp!): UpdateClaveAppResponse!
 }
 
-input CreateContributorInput {
+input CreateUserTypeInput {
   """Example field (placeholder)"""
   exampleField: Int!
 }
 
-input UpdateContributorInput {
+input UpdateUserTypeInput {
   """Example field (placeholder)"""
   exampleField: Int
+  id: Int!
+}
+
+input UpdateClaveApp {
+  clave: String!
   id: Int!
 }

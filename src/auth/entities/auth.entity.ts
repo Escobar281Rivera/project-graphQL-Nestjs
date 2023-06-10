@@ -29,8 +29,8 @@ export class Usuario {
  clave: string
 
  @Field(()=> Date,{ nullable: true})
- @Column('datetimeoffset',{ precision: 3, default: () => 'CURRENT_TIMESTAMP', nullable: true})
- fecha_Creacion: Date
+ @Column('datetime',{ precision: 3, default: () => 'CURRENT_TIMESTAMP', nullable: true})
+ fechacreacion: Date
 
  @Field(() => Boolean)
  @Column({ type: 'bit', nullable: true})

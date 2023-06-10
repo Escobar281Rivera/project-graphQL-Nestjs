@@ -6,7 +6,7 @@ import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm'
 export class UserType {
   @Field(() => Int)
   @PrimaryGeneratedColumn()
-  id_tipoUser: number
+  id_tipouser: number
 
   @Column({ type: 'varchar'})
   @Field(() => String)
