@@ -1,35 +1,38 @@
 import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
 import { AuthService } from './auth.service';
-import { Auth } from './entities/auth.entity';
+import { Usuario } from './entities/auth.entity';
 import { CreateAuthInput } from './dto/create-auth.input';
-import { UpdateAuthInput } from './dto/update-auth.input';
+import { UpdateAuthInput, UpdateClaveApp, UpdateClaveAppResponse } from './dto/update-auth.input';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from './jwt.decorator';
+import { GetOneUser } from './dto/get-user.types';
+import { Login, LoginResponse } from 'src/user_type/dto/login-dto';
 
-@Resolver(() => Auth)
+@Resolver(() => Usuario)
 export class AuthResolver {
   constructor(private readonly authService: AuthService) {}
 
-  @Mutation(() => Auth)
-  createAuth(@Args('createAuthInput') createAuthInput: CreateAuthInput) {
-    return this.authService.create(createAuthInput);
-  }
-
-  @Query(() => [Auth], { name: 'auth' })
+  @Query(() => [Usuario], { name: 'users' })
+  @UseGuards(JwtAuthGuard)
   findAll() {
     return this.authService.findAll();
   }
 
-  @Query(() => Auth, { name: 'auth' })
+  @Query(() => GetOneUser, { name: 'user' })
+  @UseGuards(JwtAuthGuard)
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.authService.findOne(id);
   }
 
-  @Mutation(() => Auth)
-  updateAuth(@Args('updateAuthInput') updateAuthInput: UpdateAuthInput) {
-    return this.authService.update(updateAuthInput.id, updateAuthInput);
+  @Query(() => LoginResponse, {name: 'auth'})
+  async login(@Args('body', {type: () => Login }) body: Login){
+    return await this.authService.login(body.username, body.clave)
   }
-
-  @Mutation(() => Auth)
-  removeAuth(@Args('id', { type: () => Int }) id: number) {
-    return this.authService.remove(id);
+  @Mutation(() => UpdateClaveAppResponse, { name: "updateClave" })
+  @UseGuards(JwtAuthGuard)
+  async updateClave(
+    @Args("data", { type: () => UpdateClaveApp }) body: UpdateClaveApp
+  ) {
+    return await this.authService.updateClave(body.id, body.clave);
   }
 }

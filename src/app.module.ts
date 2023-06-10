@@ -7,6 +7,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserTypeModule } from './user_type/user_type.module';
 import { AuthModule } from './auth/auth.module';
+import { Usuario } from './auth/entities/auth.entity';
+import { UserType } from './user_type/entities/user_type.entity';
 
 
 @Module({
@@ -19,13 +21,13 @@ import { AuthModule } from './auth/auth.module';
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         type: "mysql",
-        host: process.env.DB_HOST,
+        host: 'localhost',
         port: 3306,
         username: process.env.DB_USER,
         password: process.env.DB_PASSWORD,
         database: process.env.DB_NAME,
-        entities: [ ],
-        synchronize: false,
+        entities: [Usuario,UserType ],
+        synchronize: true,
         options: { encrypt: false}
       })
     }),
